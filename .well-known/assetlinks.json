@@ -3,7 +3,7 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "com.MyKaizenStandard1",
-      "package_name": "com.MyKaizenStandard1.dev",
+      "package_name": "com.MyKaizenStandard1",
       "sha256_cert_fingerprints": [
         "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C",
         "64:7D:C1:70:C9:94:2F:DD:8A:DD:D2:22:46:07:11:1A:89:8B:D5:E6:41:23:13:25:2F:74:F7:92:B5:C5:C4:27"
