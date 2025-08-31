@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ABDM Health Profile Share</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+      .profile-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin: 20px 0;
+      }
+      .header {
+        margin-bottom: 30px;
+      }
+      .header h1 {
+        color: #008c45;
+        margin-bottom: 5px;
+      }
+      .header p {
+        color: #666;
+        font-style: italic;
+      }
+      .param-container {
+        margin: 30px 0;
+      }
+      .param {
+        background: linear-gradient(45deg, #e8f5e8, #f0fff0);
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 10px;
+        border-left: 5px solid #008c45;
+        font-family: 'Courier New', monospace;
+        text-align: left;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .param strong {
+        color: #008c45;
+        font-size: 1.1em;
+      }
+      .param-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #333;
+        margin-top: 5px;
+      }
+      .note {
+        background: linear-gradient(45deg, #fff3cd, #ffeaa7);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 25px 0;
+        border-left: 5px solid #ffc107;
+      }
+      .success {
+        background: linear-gradient(45deg, #d4edda, #c3e6cb);
+        border-left-color: #28a745;
+      }
+      .error {
+        background: linear-gradient(45deg, #f8d7da, #f1b2b7);
+        border-left-color: #dc3545;
+      }
+      .debug-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        font-size: 0.9em;
+      }
+      .emoji {
+        font-size: 1.5em;
+        margin-right: 10px;
+      }
+      @media (max-width: 768px) {
+        .profile-card {
+          padding: 20px;
+          margin: 10px;
+        }
+        body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="profile-card">
+      <div class="header">
+        <h1>🏥 ABDM Health Profile Share</h1>
+        <p>MyKaizen App Deep Link Test</p>
+      </div>
+
+      <div id="app-status" class="note">
+        <span class="emoji">📱</span>
+        <strong>Browser Fallback:</strong> This page opened in browser instead
+        of the MyKaizen app.
+      </div>
+
+      <div class="param-container">
+        <h3>📊 Extracted URL Parameters:</h3>
+        <div id="params-container">
+          <!-- Parameters will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="debug-info">
+        <h4>🔧 Debug Information:</h4>
+        <div id="debug-info">
+          <!-- Debug info will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="note">
+        <span class="emoji">💡</span>
+        <strong>For Developers:</strong> If you're seeing this page, it means:
+        <ul style="text-align: left; margin-top: 10px">
+          <li>The deep link didn't open in your app</li>
+          <li>Check your Android manifest intent filter</li>
+          <li>Verify the assetlinks.json file is correct</li>
+          <li>Ensure your app is installed and the domain is verified</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // Extract and display URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const hipId = urlParams.get('hip-id');
+      const counterId = urlParams.get('counter-id');
+      const hip = urlParams.get('hip'); // For UHI format
+
+      // Build parameters display
+      const paramsContainer = document.getElementById('params-container');
+      let paramsHTML = '';
+
+      if (hipId) {
+        paramsHTML += `
+                <div class="param">
+                    <strong>🏥 HIP ID:</strong>
+                    <div class="param-value">${hipId}</div>
+                </div>
+            `;
+      }
+
+      if (counterId) {
+        paramsHTML += `
+                <div class="param">
+                    <strong>🔢 Counter ID:</strong>
+                    <div class="param-value">${counterId}</div>
+                </div>
+            `;
+      }
+
+      if (hip) {
+        paramsHTML += `
+                <div class="param">
+                    <strong>🏨 HIP Code:</strong>
+                    <div class="param-value">${hip}</div>
+                </div>
+            `;
+      }
+
+      paramsHTML += `
+            <div class="param">
+                <strong>🔗 Full URL:</strong>
+                <div class="param-value" style="word-break: break-all; font-size: 0.9em;">
+                    ${window.location.href}
+                </div>
+            </div>
+        `;
+
+      if (!hipId && !counterId && !hip) {
+        paramsHTML = `
+                <div class="param error">
+                    <strong>❌ No Parameters Found</strong>
+                    <div class="param-value">No hip-id, counter-id, or hip parameters detected in URL</div>
+                </div>
+            `;
+      }
+
+      paramsContainer.innerHTML = paramsHTML;
+
+      // Debug information
+      const debugInfo = document.getElementById('debug-info');
+      debugInfo.innerHTML = `
+            <div><strong>User Agent:</strong> ${navigator.userAgent}</div>
+            <div><strong>Timestamp:</strong> ${new Date().toISOString()}</div>
+            <div><strong>Referrer:</strong> ${
+              document.referrer || 'Direct access'
+            }</div>
+            <div><strong>Screen Size:</strong> ${screen.width}x${
+        screen.height
+      }</div>
+            <div><strong>Viewport:</strong> ${window.innerWidth}x${
+        window.innerHeight
+      }</div>
+        `;
+
+      // Console logging for debugging
+      console.log('ABDM Profile Share Page Loaded');
+      console.log('Extracted Parameters:', {
+        hipId,
+        counterId,
+        hip,
+        fullUrl: window.location.href,
+      });
+
+      // Check if on mobile device
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+
+      if (isMobile) {
+        console.log(
+          'Mobile device detected - deep link should have opened app',
+        );
+
+        // Update status message for mobile
+        const statusDiv = document.getElementById('app-status');
+        statusDiv.className = 'note error';
+        statusDiv.innerHTML = `
+                <span class="emoji">📱</span>
+                <strong>Mobile Device Detected:</strong> The MyKaizen app should have opened instead of this browser page. Please check your app configuration.
+            `;
+      }
+
+      // Attempt to detect if app is installed (limited capability)
+      if (navigator.userAgent.includes('Android')) {
+        console.log('Android device - checking app link handling');
+      }
+    </script>
+  </body>
+</html>

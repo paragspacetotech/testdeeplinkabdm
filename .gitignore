@@ -1,0 +1,29 @@
+# Deep Link Test Site - GitHub Pages
+# This file ensures GitHub Pages deployment works correctly
+
+# Ignore system files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*.swo
+
+# Keep all HTML, CSS, JS, and JSON files for GitHub Pages
+!*.html
+!*.css
+!*.js
+!*.json
+!*.md
+
+# Ensure assetlinks.json is included
+!.well-known/assetlinks.json

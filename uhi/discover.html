@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ABDM UHI Discovery</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+      .discovery-card {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin: 20px 0;
+      }
+      .header {
+        margin-bottom: 30px;
+      }
+      .header h1 {
+        color: #6c5ce7;
+        margin-bottom: 5px;
+      }
+      .header p {
+        color: #666;
+        font-style: italic;
+      }
+      .param-container {
+        margin: 30px 0;
+      }
+      .param {
+        background: linear-gradient(45deg, #f3f2ff, #f8f7ff);
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 10px;
+        border-left: 5px solid #6c5ce7;
+        font-family: 'Courier New', monospace;
+        text-align: left;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .param strong {
+        color: #6c5ce7;
+        font-size: 1.1em;
+      }
+      .param-value {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #333;
+        margin-top: 5px;
+      }
+      .note {
+        background: linear-gradient(45deg, #fff3cd, #ffeaa7);
+        padding: 20px;
+        border-radius: 10px;
+        margin: 25px 0;
+        border-left: 5px solid #ffc107;
+      }
+      .success {
+        background: linear-gradient(45deg, #d4edda, #c3e6cb);
+        border-left-color: #28a745;
+      }
+      .error {
+        background: linear-gradient(45deg, #f8d7da, #f1b2b7);
+        border-left-color: #dc3545;
+      }
+      .debug-info {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px 0;
+        font-size: 0.9em;
+      }
+      .emoji {
+        font-size: 1.5em;
+        margin-right: 10px;
+      }
+      .feature-list {
+        text-align: left;
+        margin: 20px 0;
+      }
+      .feature-list li {
+        margin: 8px 0;
+        padding-left: 10px;
+      }
+      @media (max-width: 768px) {
+        .discovery-card {
+          padding: 20px;
+          margin: 10px;
+        }
+        body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="discovery-card">
+      <div class="header">
+        <h1>🔍 ABDM UHI Discovery</h1>
+        <p>Unified Health Interface - MyKaizen App</p>
+      </div>
+
+      <div id="app-status" class="note">
+        <span class="emoji">📱</span>
+        <strong>Browser Fallback:</strong> This UHI discovery page opened in
+        browser instead of the MyKaizen app.
+      </div>
+
+      <div class="param-container">
+        <h3>🏥 Healthcare Provider Discovery:</h3>
+        <div id="params-container">
+          <!-- Parameters will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="note success" id="uhi-info">
+        <span class="emoji">🌐</span>
+        <strong>UHI Discovery Purpose:</strong>
+        <div class="feature-list">
+          <ul>
+            <li>🔍 Discover healthcare providers</li>
+            <li>🏥 Find hospitals and clinics</li>
+            <li>📋 View available services</li>
+            <li>📅 Check appointment slots</li>
+            <li>💰 Compare pricing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="debug-info">
+        <h4>🔧 Debug Information:</h4>
+        <div id="debug-info">
+          <!-- Debug info will be populated by JavaScript -->
+        </div>
+      </div>
+
+      <div class="note">
+        <span class="emoji">⚠️</span>
+        <strong>Deep Link Configuration:</strong>
+        <div class="feature-list">
+          <ul>
+            <li>🔗 URL Format: <code>/uhi/discover?hip=HIPCODE</code></li>
+            <li>📱 Should open MyKaizen app directly</li>
+            <li>🛡️ Requires proper intent filter setup</li>
+            <li>✅ Must handle HIP parameter extraction</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Extract and display URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const hip = urlParams.get('hip');
+      const hipId = urlParams.get('hip-id'); // Alternative format
+      const providerId = urlParams.get('provider-id');
+
+      // Build parameters display
+      const paramsContainer = document.getElementById('params-container');
+      let paramsHTML = '';
+
+      if (hip) {
+        paramsHTML += `
+                <div class="param">
+                    <strong>🏥 HIP Code:</strong>
+                    <div class="param-value">${hip}</div>
+                </div>
+            `;
+      }
+
+      if (hipId) {
+        paramsHTML += `
+                <div class="param">
+                    <strong>🏨 HIP ID:</strong>
+                    <div class="param-value">${hipId}</div>
+                </div>
+            `;
+      }
+
+      if (providerId) {
+        paramsHTML += `
+                <div class="param">
+                    <strong>🔍 Provider ID:</strong>
+                    <div class="param-value">${providerId}</div>
+                </div>
+            `;
+      }
+
+      paramsHTML += `
+            <div class="param">
+                <strong>🔗 Full URL:</strong>
+                <div class="param-value" style="word-break: break-all; font-size: 0.9em;">
+                    ${window.location.href}
+                </div>
+            </div>
+        `;
+
+      if (!hip && !hipId && !providerId) {
+        paramsHTML = `
+                <div class="param error">
+                    <strong>❌ No HIP Parameters Found</strong>
+                    <div class="param-value">No hip, hip-id, or provider-id parameters detected in URL</div>
+                </div>
+            `;
+      }
+
+      paramsContainer.innerHTML = paramsHTML;
+
+      // Debug information
+      const debugInfo = document.getElementById('debug-info');
+      debugInfo.innerHTML = `
+            <div><strong>User Agent:</strong> ${navigator.userAgent}</div>
+            <div><strong>Timestamp:</strong> ${new Date().toISOString()}</div>
+            <div><strong>Referrer:</strong> ${
+              document.referrer || 'Direct access'
+            }</div>
+            <div><strong>Screen Size:</strong> ${screen.width}x${
+        screen.height
+      }</div>
+            <div><strong>Viewport:</strong> ${window.innerWidth}x${
+        window.innerHeight
+      }</div>
+        `;
+
+      // Console logging for debugging
+      console.log('ABDM UHI Discovery Page Loaded');
+      console.log('Extracted Parameters:', {
+        hip,
+        hipId,
+        providerId,
+        fullUrl: window.location.href,
+      });
+
+      // Check if on mobile device
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        );
+
+      if (isMobile) {
+        console.log(
+          'Mobile device detected - UHI discovery should have opened app',
+        );
+
+        // Update status message for mobile
+        const statusDiv = document.getElementById('app-status');
+        statusDiv.className = 'note error';
+        statusDiv.innerHTML = `
+                <span class="emoji">📱</span>
+                <strong>Mobile Device Detected:</strong> The MyKaizen app should have opened for UHI discovery instead of this browser page.
+            `;
+      }
+
+      // Show specific provider info if available
+      if (hip) {
+        const uhi_info = document.getElementById('uhi-info');
+        uhi_info.innerHTML += `
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #28a745;">
+                    <strong>🎯 Discovering: ${hip}</strong>
+                    <p style="margin: 5px 0;">Your app should now show healthcare services available from <strong>${hip}</strong> provider.</p>
+                </div>
+            `;
+      }
+
+      // Detect Android for specific debugging
+      if (navigator.userAgent.includes('Android')) {
+        console.log('Android device - checking UHI deep link handling');
+      }
+    </script>
+  </body>
+</html>
